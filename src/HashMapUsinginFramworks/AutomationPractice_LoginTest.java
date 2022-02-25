@@ -1,0 +1,63 @@
+package HashMapUsinginFramworks;
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class AutomationPractice_LoginTest {
+	
+	static WebDriver driver; 
+	static String customerCedentials;
+	static String customerInfo[];
+
+	public static void main(String[] args) {
+				
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\Prakash\\eclipse-workspace\\HashMapConcept\\chromedriver.exe");	
+		
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.manage().deleteAllCookies();
+		driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(60));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
+		
+		driver.get("http://automationpractice.com/index.php");
+		
+		//Sign in Part
+		
+		WebElement SigninBtn = driver.findElement(By.xpath("//a[normalize-space()='Sign in']"));
+		SigninBtn.click();
+		
+		
+		//HashMap Concept
+		
+	    //Data data = new Data(); //use static in Data class Methods
+		
+	    customerCedentials = Data.getUserLoginInfo().get("customer");
+	    customerInfo = customerCedentials.split("_");
+		
+		WebElement EmailAddress = driver.findElement(By.id("email"));
+		EmailAddress.sendKeys(customerInfo[0]);
+		
+		WebElement Password = driver.findElement(By.id("passwd"));
+		Password.sendKeys(customerInfo[1]);
+		
+		
+		//SubmitLoginButton Part
+		
+		WebElement SubmitLogin = driver.findElement(By.id("SubmitLogin"));
+		SubmitLogin.click();
+		
+		//SignOut Part
+		
+		WebElement SignOut = driver.findElement(By.xpath("//a[@title='Log me out']"));
+		SignOut.click();
+		
+		driver.quit();
+		
+		
+	}
+
+}
